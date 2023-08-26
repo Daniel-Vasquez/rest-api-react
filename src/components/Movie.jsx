@@ -1,7 +1,11 @@
 import './styles/Movie.css'
 
-const Movie = ({ movie, onDelete }) => {
+const Movie = ({ movie, onDelete, setSelectedMovie }) => {
   const { id, title, year, genre, poster, rate, duration } = movie;
+
+  const openEditModal = (movie) => {
+    setSelectedMovie(movie);
+  };
 
   return (
     <article data-id={id} className="card">
@@ -20,9 +24,16 @@ const Movie = ({ movie, onDelete }) => {
         <p className="card-info__text">⭐ {rate}/10</p>
       </div>
 
-      <button className="button-48" onClick={() => onDelete(id)}>
-        Eliminar
-      </button>
+      <div className='card-buttons'>
+        <button className="button-48 button-48-color" onClick={() => openEditModal(movie)}>
+          Editar
+        </button>
+
+        <button className="button-48" onClick={() => onDelete(id)}>
+          Eliminar
+        </button>
+
+      </div>
     </article>
   );
 };

@@ -47,3 +47,29 @@ export async function addMovie(title, poster, year, director, duration, genre) {
       console.error('Error al agregar la película:', err);
     });
 }
+
+// Update movie
+export async function updateMovie(id, updatedData, setMovies) {
+  try {
+    const response = await fetch(`https://rest-api-ytw2-dev.fl0.io/movies/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedData),
+    });
+
+    if (!response.ok) {
+      throw new Error('La solicitud de actualización no fue exitosa');
+    }
+
+    const updatedMovie = await response.json();
+    setMovies((prevMovies) =>
+      prevMovies.map((movie) => (movie.id === id ? updatedMovie : movie))
+    );
+
+    console.log('Película actualizada:', updatedMovie);
+  } catch (error) {
+    console.error('Error al actualizar la película:', error);
+  }
+}

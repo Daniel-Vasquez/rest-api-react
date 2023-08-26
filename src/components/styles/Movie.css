@@ -138,11 +138,17 @@
   margin-bottom: 4px;
 }
 
+.card-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .button-48 {
   appearance: none;
   background-color: #FFFFFF;
   border-width: 0;
-  color: #000000;
+  color: red;
   cursor: pointer;
   display: inline-block;
   font-family: Clarkson, Helvetica, sans-serif;
@@ -165,6 +171,15 @@
   touch-action: manipulation;
   vertical-align: baseline;
   white-space: nowrap;
+}
+
+.button-48.button-48-color {
+  color: black;
+}
+
+.button-48.button-48-color:before {
+  background-color: #00bcd4;
+  content: "Editar";
 }
 
 .button-48:before {
