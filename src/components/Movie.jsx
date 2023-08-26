@@ -1,6 +1,8 @@
 import './styles/Movie.css'
 
-const Movie = ({ id, title, genre, poster, year, onDelete }) => {
+const Movie = ({ movie, onDelete }) => {
+  const { id, title, year, genre, poster, rate, duration } = movie;
+
   return (
     <article data-id={id} className="card">
       <div className="video_thumb circle">
@@ -12,7 +14,10 @@ const Movie = ({ id, title, genre, poster, year, onDelete }) => {
       <div className="card-info">
         <p className="card-info__title">{title}</p>
         <p className="card-info__text">{year}</p>
-        <p>{genre[0]}</p>
+        <p className="card-info__text"></p>
+        <p className="card-info__text">{genre[0]}</p>
+        <p className="card-info__text">{duration} min.</p>
+        <p className="card-info__text">⭐ {rate}/10</p>
       </div>
 
       <button className="button-48" onClick={() => onDelete(id)}>

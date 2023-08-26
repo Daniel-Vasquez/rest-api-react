@@ -1,16 +1,3 @@
-:root {
-  --bg-color: #DCE9FF;
-  --bg-color-seconds: #CEB2FC;
-  --bg-color-light: #ffeeba;
-  --text-color-hover: #4C5656;
-  --box-shadow-color: rgba(255, 215, 97, 0.48);
-  --b: 3px;
-  --s: .45em;
-  --color: #373B44;
-  --primary-color: rgba(0, 0, 0, 0.8);
-  --seconds-color: #2196F3;
-}
-
 .card {
   display: flex;
   flex-direction: column;
@@ -38,7 +25,7 @@
 }
 
 .card:hover .overlay {
-  transform: scale(8) translateZ(0);
+  transform: scale(10) translateZ(0);
 }
 
 .card:hover .circle {
@@ -127,7 +114,7 @@
   background: var(--bg-color-seconds);
   top: 20%;
   z-index: 0;
-  transition: transform 0.3s ease-out;
+  transition: transform 0.5s ease-out;
 }
 
 .card-info {
@@ -137,12 +124,11 @@
 .card-info__title {
   color: var(--seconds-color);
   font-weight: 600;
-  opacity: 1;
 }
 
 .card-info__text {
   line-height: 20px;
-  opacity: .7;
+  opacity: .8;
   color: var(--primary-color);
 }
 

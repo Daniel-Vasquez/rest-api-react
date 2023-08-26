@@ -1,50 +1,72 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { Form } from './components/Form';
+import { setRandomImage } from './utils';
+import { handleDeleteMovie, addMovie } from './methods';
 import Movie from './components/Movie';
 import './App.css';
 
 const App = () => {
-  // State para almacenar las películas
   const [movies, setMovies] = useState([]);
+  const [title, setTitle] = useState('');
+  const [year, setYear] = useState('');
+  const [director, setDirector] = useState('');
+  const [duration, setDuration] = useState('');
+  const [rate, setRate] = useState('');
+  const [genre, setGenre] = useState('Action');
 
-  // useEffec para cargar las películas
   useEffect(() => {
     fetch('https://rest-api-ytw2-dev.fl0.io/movies')
       .then((res) => res.json())
       .then((moviesData) => setMovies(moviesData))
       .catch(error => console.error('Error al cargar las películas:', error));
+  }, [movies]);
 
-  }, []);
-
-  // DELETE: Función para eliminar una película
-  const handleDeleteMovie = async (id) => {
-    try {
-      await fetch(`https://rest-api-ytw2-dev.fl0.io/movies/${id}`, {
-        method: 'DELETE'
-      });
-
-      setMovies((prevMovies) => prevMovies.filter((movie) => movie.id !== id));
-    } catch (error) {
-      console.error('Error al eliminar la película:', error);
-    }
+  const handleChange = (event) => {
+    setGenre(event.target.value);
   };
+
+  const handleCreate = async () => {
+    const newPoster = setRandomImage();
+    await addMovie(title, newPoster, year, director, duration, genre.split(','));
+
+    setTitle('');
+    setYear('');
+    setDirector('');
+    setDuration('');
+    setRate('');
+    setGenre('');
+  }
 
   return (
     <div className="container">
-      {/* Your movie list JSX here */}
+      <h1 className="container-title">Crea una película</h1>
+      <Form
+        title={title}
+        setTitle={setTitle}
+        year={year}
+        setYear={setYear}
+        director={director}
+        setDirector={setDirector}
+        duration={duration}
+        setDuration={setDuration}
+        rate={rate}
+        setRate={setRate}
+        genre={genre}
+        setGenre={setGenre}
+        handleChange={handleChange}
+        handleClick={handleCreate}
+      />
+
       <h1 className="container-title">Catálogo de películas</h1>
       <main className="main">
         {movies.length === 0 ? (
           <h1>Sin películas</h1>
         ) : (
-          movies.map(({ id, title, genre, poster, year }) => (
+          movies.map((movie, id) => (
             <Movie
               key={id}
-              id={id}
-              title={title}
-              genre={genre}
-              poster={poster}
-              year={year}
-              onDelete={handleDeleteMovie}
+              movie={movie}
+              onDelete={() => handleDeleteMovie(movie.id, setMovies)}
             />
           ))
         )}
