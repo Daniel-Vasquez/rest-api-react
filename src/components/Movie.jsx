@@ -16,24 +16,25 @@ const Movie = ({ movie, onDelete, setSelectedMovie }) => {
       <div className="overlay"></div>
 
       <div className="card-info">
-        <p className="card-info__title">{title}</p>
-        <p className="card-info__text">{year}</p>
+        <p className="card-info__title">{!title ? "" : title}</p>
+        <p className="card-info__text">{!year ? 0 : year}</p>
         <p className="card-info__text"></p>
-        <p className="card-info__text">{genre[0]}</p>
-        <p className="card-info__text">{duration} min.</p>
-        <p className="card-info__text">⭐ {rate}/10</p>
+        <p className="card-info__text">{Array.isArray(genre) ? genre[0] : genre}</p>
+        <p className="card-info__text">{!duration ? 0 : duration} min.</p>
+        <p className="card-info__text">⭐ {!rate ? 0 : rate}/10</p>
       </div>
 
-      <div className='card-buttons'>
-        <button className="button-48 button-48-color" onClick={() => openEditModal(movie)}>
-          Editar
-        </button>
+      {id && (
+        <div className='card-buttons'>
+          <button className="button-48 button-48-color" onClick={() => openEditModal(movie)}>
+            Edit
+          </button>
 
-        <button className="button-48" onClick={() => onDelete(id)}>
-          Eliminar
-        </button>
-
-      </div>
+          <button className="button-48" onClick={() => onDelete(id)}>
+            Delete
+          </button>
+        </div>
+      )}
     </article>
   );
 };

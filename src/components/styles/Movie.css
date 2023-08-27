@@ -5,7 +5,6 @@
   align-items: center;
   gap: 10px;
   width: 100%;
-  min-height: 200px;
   height: 100%;
   border-top-right-radius: 10px;
   overflow: hidden;
@@ -19,9 +18,8 @@
 }
 
 .card:hover {
-  /* transform: translateY(-5px) scale(1.005) translateZ(0); */
-  box-shadow: 0 24px 36px rgba(0, 0, 0, 0.11),
-    0 24px 46px var(--box-shadow-color);
+  /* transform: translateY(-5px) scale(0.95) translateZ(0); */
+  box-shadow: 1px 1px 26px 5px var(--primary-color);
 }
 
 .card:hover .overlay {
@@ -64,7 +62,7 @@
 .circle-img {
   min-height: 200px;
   width: 100%;
-  max-height: 350px;
+  max-height: 300px;
   height: 100%;
   margin: 0 auto;
   object-fit: contain;
@@ -179,7 +177,7 @@
 
 .button-48.button-48-color:before {
   background-color: #00bcd4;
-  content: "Editar";
+  content: "Edit";
 }
 
 .button-48:before {
@@ -191,7 +189,7 @@
   backface-visibility: hidden;
   background-color: #e91e63;
   clip-path: polygon(-1% 0, 0 0, -25% 100%, -1% 100%);
-  content: "Eliminar";
+  content: "Delete";
   height: 100%;
   left: 0;
   position: absolute;
@@ -214,4 +212,12 @@
 .button-48:before,
 .button-48:hover:before {
   border-radius: 10px;
+}
+
+@media screen and (max-width: 550px) {
+  .card {
+    max-width: 300px;
+    width: 100%;
+    margin: 0 auto;
+  }
 }

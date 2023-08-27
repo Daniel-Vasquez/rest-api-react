@@ -11,15 +11,14 @@ export const Form = ({
   setDuration,
   rate,
   setRate,
-  genre,
   handleChange,
   handleClick
 }) => {
   return (
-    <form className={styleForm.form}>
+    <form className={styleForm.form} onSubmit={handleClick}>
       <div name='title'>
         <label className={styleForm["form-label"]}>
-          Título:
+          Title:
         </label>
         <input
           className={styleForm["form-input"]}
@@ -45,47 +44,44 @@ export const Form = ({
 
       <div name='year'>
         <label className={styleForm["form-label"]}>
-          Año:
+          Year:
         </label>
         <input
           className={styleForm["form-input"]}
           type="number"
-          value={year}
+          value={year ? year : ""}
           min={1985}
           max={2024}
           onChange={(e) => setYear(parseInt(e.target.value))}
           required
         />
-        <span className={styleForm["form-label__span"]}>
-          *Mínimo del 1985 hasta el 2024.
-        </span>
       </div>
 
       <div name='duration'>
         <label className={styleForm["form-label"]}>
-          Duración:
+          Duration:
         </label>
         <input
           className={styleForm["form-input"]}
           type="number"
-          value={duration}
+          value={duration ? duration : ""}
           min={0}
           onChange={(e) => setDuration(parseInt(e.target.value))}
           required
         />
         <span className={styleForm["form-label__span"]}>
-          *En minutos, ejemplo: 90, 120, 180, etc.
+          *In minutes, example: <strong>90, 120, 180,</strong> etc.
         </span>
       </div>
 
       <div name='rate'>
         <label className={styleForm["form-label"]}>
-          Calificación:
+          Rate:
         </label>
         <input
           className={styleForm["form-input"]}
           type="number"
-          value={rate}
+          value={rate ? rate : ""}
           min={0}
           max={10}
           onChange={(e) => setRate(parseInt(e.target.value))}
@@ -94,33 +90,31 @@ export const Form = ({
 
       <div name='genre'>
         <label className={styleForm["form-label"]}>
-          Género:
+          Genre:
         </label>
         <select className={styleForm["form-select"]} defaultValue="" onChange={handleChange}>
-          <option value="Action">Acción</option>
-          <option value="Adventure">Aventura</option>
-          <option value="Comedy">Comedia</option>
+          <option value="Action">Action</option>
+          <option value="Adventure">Adventure</option>
+          <option value="Comedy">Comedy</option>
           <option value="Drama">Drama</option>
-          <option value="Fantasy">Fantasía</option>
-          <option value="Horror">Terror</option>
-          <option value="Biography">Biografía</option>
-          <option value="Crime">Crimen</option>
+          <option value="Fantasy">Fantasy</option>
+          <option value="Horror">Horror</option>
+          <option value="Biography">Biography</option>
+          <option value="Crime">Crime</option>
           <option value="Romance">Romance</option>
-          <option value="Sci-Fi">Ciencia Ficción</option>
+          <option value="Sci-Fi">Sci-Fi</option>
         </select>
       </div>
 
       <span name='poster' className={styleForm["form-label__span"]}>
-        *El poster se genera automáticamente.
+        *The <strong>poster</strong> is generated automatically.
       </span>
-      
+
       <button
         className={styleForm["form-button"]}
-        type='button'
-        onClick={handleClick}
-        disabled={!title || !year || !director || !duration || !genre}
+        type='submit'
       >
-        Crear
+        Create
       </button>
     </form>
   )

@@ -41,7 +41,16 @@
   margin-top: 0;
 }
 
-.modal-input {
+.modal-form__label {
+  display: block;
+  font-weight: 600;
+  font-size: 1.05rem;
+  opacity: 0.8;
+  margin-bottom: 5px;
+}
+
+.modal-input,
+.form-select {
   width: 100%;
   padding: 8px;
   margin-bottom: 10px;
@@ -51,10 +60,11 @@
 
 .modal-buttons-options {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  margin: 10px 0;
 }
 
-.modal-button {
+.modal-button, .modal-button__close {
   font-weight: 600;
   padding: 8px 16px;
   border: none;
@@ -64,7 +74,7 @@
   color: white;
 }
 
-.modal-button:last-child {
-  background-color: #ccc;
-  color: black;
+.modal-button__close {
+  background-color: red;
+  color: white;
 }

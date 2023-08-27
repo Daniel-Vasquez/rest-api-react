@@ -7,7 +7,7 @@ export const handleDeleteMovie = async (id, setMovies) => {
 
     setMovies((prevMovies) => prevMovies.filter((movie) => movie.id !== id));
   } catch (error) {
-    console.error('Error al eliminar la película:', error);
+    console.error('Error deleting movie:', error);
   }
 };
 
@@ -36,15 +36,15 @@ export async function addMovie(title, poster, year, director, duration, genre) {
   })
     .then(response => {
       if (!response.ok) {
-        throw new Error('La solicitud no fue exitosa');
+        throw new Error('The request was not successful');
       }
       return response.json();
     })
     .then(newMovie => {
-      console.log('Nueva película agregada:', newMovie);
+      console.log('New movie added:', newMovie);
     })
     .catch(err => {
-      console.error('Error al agregar la película:', err);
+      console.error('Error adding movie:', err);
     });
 }
 
@@ -60,7 +60,7 @@ export async function updateMovie(id, updatedData, setMovies) {
     });
 
     if (!response.ok) {
-      throw new Error('La solicitud de actualización no fue exitosa');
+      throw new Error('The update request was not successful');
     }
 
     const updatedMovie = await response.json();
@@ -68,8 +68,8 @@ export async function updateMovie(id, updatedData, setMovies) {
       prevMovies.map((movie) => (movie.id === id ? updatedMovie : movie))
     );
 
-    console.log('Película actualizada:', updatedMovie);
+    console.log('Updated movie:', updatedMovie);
   } catch (error) {
-    console.error('Error al actualizar la película:', error);
+    console.error('Error updating movie:', error);
   }
 }
