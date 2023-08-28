@@ -3,7 +3,7 @@ import { Form } from './components/Form';
 import { setRandomImage } from './utils';
 import { handleDeleteMovie, createMovie, updateMovie } from './methods';
 import { Loading } from './components/Loading';
-import { EditModal } from './components/Modal';
+import { Modal } from './components/Modal';
 import Movie from './components/Movie';
 import './App.css';
 
@@ -55,6 +55,14 @@ const App = () => {
   const closeEditModal = () => {
     setSelectedMovie(null);
   };
+
+  const deleteMovie = async (id, setMovies) => { 
+    setIsLoaded(true);
+    await handleDeleteMovie(id, setMovies)
+    setIsLoaded(false);
+
+    allMovies()
+  }
 
   const handleEdit = async (updatedMovie) => {
     setIsLoaded(true);
@@ -125,12 +133,12 @@ const App = () => {
               <Movie
                 key={id}
                 movie={movie}
-                onDelete={() => handleDeleteMovie(movie.id, setMovies)}
+                onDelete={() => deleteMovie(movie.id, setMovies)}
                 setSelectedMovie={setSelectedMovie}
               />
             ))}
             {selectedMovie && (
-              <EditModal
+              <Modal
                 movie={selectedMovie}
                 onClose={closeEditModal}
                 onEdit={handleEdit}

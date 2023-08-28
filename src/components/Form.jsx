@@ -98,7 +98,6 @@ export const Form = ({
         </label>
         <select
           className={styleForm["form-select"]}
-          // defaultValue=""
           defaultValue={Array.isArray(genre) ? genre[0] : genre}
           onChange={(e) => handleChangeForm(e.target.value, setGenre)}
         >
