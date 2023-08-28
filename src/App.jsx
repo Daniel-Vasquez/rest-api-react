@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Form } from './components/Form';
 import { setRandomImage } from './utils';
-import { handleDeleteMovie, addMovie, updateMovie } from './methods';
+import { handleDeleteMovie, createMovie, updateMovie } from './methods';
 import { Loading } from './components/Loading';
 import { EditModal } from './components/Modal';
 import Movie from './components/Movie';
@@ -17,25 +17,30 @@ const App = () => {
   const [genre, setGenre] = useState('Action');
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [creading, setCreading] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [newPoster, _] = useState(setRandomImage());
 
-  useEffect(() => {
-    fetch('https://rest-api-ytw2-dev.fl0.io/movies')
+  const allMovies = async () => {
+    setIsLoaded(true)
+
+    await fetch('https://rest-api-ytw2-dev.fl0.io/movies')
       .then((res) => res.json())
       .then((moviesData) => setMovies(moviesData))
       .catch(error => console.error('Error al cargar las películas:', error));
+
+    setIsLoaded(false)
+  }
+
+  useEffect(() => {
+    allMovies()
   }, []);
 
-  const handleChange = (event) => {
-    setGenre(event.target.value);
-  };
-
-  const newPoster = setRandomImage();
-
-  const handleCreate = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     setIsLoaded(true);
-    await addMovie(title, newPoster, year, director, duration, genre.split(','));
+    await createMovie(title, newPoster, year, director, duration, rate, genre.split(','));
+    setIsLoaded(false);
 
     setTitle('');
     setYear('');
@@ -43,9 +48,8 @@ const App = () => {
     setDuration('');
     setRate('');
     setGenre('');
-    setIsLoaded(false);
 
-    window.location.reload();
+    allMovies()
   }
 
   const closeEditModal = () => {
@@ -54,9 +58,7 @@ const App = () => {
 
   const handleEdit = async (updatedMovie) => {
     setIsLoaded(true);
-
     await updateMovie(updatedMovie.id, updatedMovie, setMovies)
-
     setIsLoaded(false);
 
     closeEditModal();
@@ -68,14 +70,20 @@ const App = () => {
     <div className="container">
       <div className='container-button'>
         <button
-          className={`container-button__button ${creading ? 'button-color' : ''}`}
-          onClick={() => setCreading(!creading)}
+          className={
+            `container-button__button ${showForm ? 'button-color' : ''}`
+          }
+          onClick={() => setShowForm(!showForm)}
         >
-          {!creading ? 'Create a movie' : 'Close form'}
+          {!showForm ? 'Create a movie' : 'Close form'}
         </button>
       </div>
       <div className='container-form'>
-        <div className={`container-form__form ${creading ? 'container-form' : ''}`}>
+        <div
+          className={
+            `container-form__form ${showForm ? 'container-form' : ''}`
+          }
+        >
           <Form
             title={title}
             setTitle={setTitle}
@@ -89,19 +97,18 @@ const App = () => {
             setRate={setRate}
             genre={genre}
             setGenre={setGenre}
-            handleChange={handleChange}
-            handleClick={handleCreate}
+            handleSubmit={handleSubmit}
           />
           <div className='container-form-show-card'>
             <Movie
               movie={{
                 title: title ? title : '',
-                year: year ? year : 1985,
+                year: year ? year : "",
                 poster: newPoster,
                 director: director ? director : '',
                 duration: duration ? duration : 0,
                 rate: rate ? rate : 0,
-                genre : genre ? genre : 'Action'
+                genre: genre ? genre : 'Action'
               }}
             />
           </div>
@@ -123,7 +130,11 @@ const App = () => {
               />
             ))}
             {selectedMovie && (
-              <EditModal movie={selectedMovie} onClose={closeEditModal} onEdit={handleEdit} />
+              <EditModal
+                movie={selectedMovie}
+                onClose={closeEditModal}
+                onEdit={handleEdit}
+              />
             )}
           </section>
         )}

@@ -12,13 +12,14 @@ export const handleDeleteMovie = async (id, setMovies) => {
 };
 
 // Create movie
-export async function addMovie(title, poster, year, director, duration, genre) {
+export async function createMovie(title, poster, year, director, duration, rate, genre) {
   const data = {
     title: title,
     poster: poster,
     year: year,
     director: director,
     duration: duration,
+    rate: rate,
     genre: genre,
   };
 

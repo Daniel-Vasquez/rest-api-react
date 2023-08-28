@@ -11,11 +11,15 @@ export const Form = ({
   setDuration,
   rate,
   setRate,
-  handleChange,
-  handleClick
+  genre,
+  setGenre,
+  handleSubmit
 }) => {
+  const handleChangeForm = (value, useState) => {
+    useState(value)
+  }
   return (
-    <form className={styleForm.form} onSubmit={handleClick}>
+    <form className={styleForm.form} onSubmit={handleSubmit}>
       <div name='title'>
         <label className={styleForm["form-label"]}>
           Title:
@@ -24,7 +28,7 @@ export const Form = ({
           className={styleForm["form-input"]}
           type="text"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => handleChangeForm(e.target.value, setTitle)}
           required
         />
       </div>
@@ -37,7 +41,7 @@ export const Form = ({
           className={styleForm["form-input"]}
           type="text"
           value={director}
-          onChange={(e) => setDirector(e.target.value)}
+          onChange={(e) => handleChangeForm(e.target.value, setDirector)}
           required
         />
       </div>
@@ -50,9 +54,9 @@ export const Form = ({
           className={styleForm["form-input"]}
           type="number"
           value={year ? year : ""}
-          min={1985}
+          min={1900}
           max={2024}
-          onChange={(e) => setYear(parseInt(e.target.value))}
+          onChange={(e) => handleChangeForm(parseInt(e.target.value), setYear)}
           required
         />
       </div>
@@ -66,7 +70,7 @@ export const Form = ({
           type="number"
           value={duration ? duration : ""}
           min={0}
-          onChange={(e) => setDuration(parseInt(e.target.value))}
+          onChange={(e) => handleChangeForm(parseInt(e.target.value), setDuration)}
           required
         />
         <span className={styleForm["form-label__span"]}>
@@ -84,7 +88,7 @@ export const Form = ({
           value={rate ? rate : ""}
           min={0}
           max={10}
-          onChange={(e) => setRate(parseInt(e.target.value))}
+          onChange={(e) => handleChangeForm(parseInt(e.target.value), setRate)}
         />
       </div>
 
@@ -92,7 +96,12 @@ export const Form = ({
         <label className={styleForm["form-label"]}>
           Genre:
         </label>
-        <select className={styleForm["form-select"]} defaultValue="" onChange={handleChange}>
+        <select
+          className={styleForm["form-select"]}
+          // defaultValue=""
+          defaultValue={Array.isArray(genre) ? genre[0] : genre}
+          onChange={(e) => handleChangeForm(e.target.value, setGenre)}
+        >
           <option value="Action">Action</option>
           <option value="Adventure">Adventure</option>
           <option value="Comedy">Comedy</option>

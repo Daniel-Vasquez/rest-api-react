@@ -39,8 +39,11 @@ export const EditModal = ({ movie, onClose, onEdit }) => {
     <div className={styleModule.overlay}>
       <div className={styleModule.modal}>
         <button className={styleModule['modal-close']} onClick={onClose}>
-          ❌
+          <div className={styleModule['modal-right-arrow']}></div>
+          <div className={styleModule['modal-left-arrow']}></div>
+          <label className={styleModule['modal-close-btn']}>close</label>
         </button>
+
         <h2 className={styleModule['modal-title']}>Edit Movie</h2>
         <form onSubmit={handleEdit}>
           <label className={styleModule['modal-form__label']}>
@@ -75,7 +78,7 @@ export const EditModal = ({ movie, onClose, onEdit }) => {
             type="number"
             name="year"
             value={year ? year : ""}
-            min={1985}
+            min={1900}
             max={2024}
             onChange={handleInputChange}
             required
@@ -133,12 +136,21 @@ export const EditModal = ({ movie, onClose, onEdit }) => {
           </div>
 
           <div className={styleModule['modal-buttons-options']}>
-            <button type='submit' className={styleModule['modal-button']}>Save</button>
+            <button
+              type="submit"
+              className={styleModule['modal-button']}
+            >
+              Save
+            </button>
+            <button
+              type="button"
+              className={styleModule['modal-button__close']}
+              onClick={onClose}
+            >
+              Cancel
+            </button>
           </div>
         </form>
-        <div className={styleModule['modal-buttons-options']}>
-          <button className={styleModule['modal-button__close']} onClick={onClose}>Cancel</button>
-        </div>
       </div>
     </div>
   );

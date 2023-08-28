@@ -22,6 +22,7 @@
 }
 
 .container-button__button {
+  width: 150px;
   align-items: center;
   appearance: none;
   background-color: #FCFCFD;
@@ -67,7 +68,6 @@
   box-shadow: #D6D6E7 0 3px 7px inset;
   transform: translateY(2px);
 }
-
 
 .container-button__button.button-color {
   background-color: #E91E63;
@@ -121,7 +121,7 @@
   width: 100%;
 }
 
-@media screen and (max-width: 780px) {
+@media screen and (max-width: 900px) {
   .container-form.container-form__form {
     max-height: 1500px;
   }
