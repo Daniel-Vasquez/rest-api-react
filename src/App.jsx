@@ -4,6 +4,9 @@ import { setRandomImage } from './utils';
 import { handleDeleteMovie, createMovie, updateMovie } from './methods';
 import { Loading } from './components/Loading';
 import { Modal } from './components/Modal';
+import { sortByYearDescending, sortByYearAscending, sortByTitle } from './utils';
+import { LoadingMovies } from './components/LoadingMovies';
+import { OptionsButtons } from './components/OptionsButtons';
 import Movie from './components/Movie';
 import './App.css';
 
@@ -19,6 +22,7 @@ const App = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [newPoster, _] = useState(setRandomImage());
+  const [isFilterApplied, setIsFilterApplied] = useState(false);
 
   const allMovies = async () => {
     setIsLoaded(true)
@@ -56,7 +60,7 @@ const App = () => {
     setSelectedMovie(null);
   };
 
-  const deleteMovie = async (id, setMovies) => { 
+  const deleteMovie = async (id, setMovies) => {
     setIsLoaded(true);
     await handleDeleteMovie(id, setMovies)
     setIsLoaded(false);
@@ -72,7 +76,13 @@ const App = () => {
     closeEditModal();
   };
 
-  if (isLoaded) return <Loading />
+  const handleAction = (actionFunction, currentMovies, updateMovies, updateFilteredMovies) => {
+    actionFunction(currentMovies, updateMovies, updateFilteredMovies);
+  };
+
+  if (isLoaded) {
+    return <Loading />
+  }
 
   return (
     <div className="container">
@@ -89,7 +99,7 @@ const App = () => {
       <div className='container-form'>
         <div
           className={
-            `container-form__form ${showForm ? 'container-form' : ''}`
+            `container-form__form ${showForm ? 'form-outspread' : ''}`
           }
         >
           <Form
@@ -125,27 +135,75 @@ const App = () => {
 
       <h1 className="container-title">Movie catalog</h1>
       <main className="main">
-        {movies.length === 0 ? (
-          <h1 className="container-title-no-movies">No movies</h1>
-        ) : (
-          <section className="main-movies">
-            {movies.map((movie, id) => (
-              <Movie
-                key={id}
-                movie={movie}
-                onDelete={() => deleteMovie(movie.id, setMovies)}
-                setSelectedMovie={setSelectedMovie}
-              />
-            ))}
-            {selectedMovie && (
-              <Modal
-                movie={selectedMovie}
-                onClose={closeEditModal}
-                onEdit={handleEdit}
-              />
-            )}
-          </section>
-        )}
+        <div className="main-opntions">
+          <div className="main-opntions-text">
+            <h3 className="main-opntions-text__text">SORT BY:</h3>
+          </div>
+          <div className="options-buttons">
+            <OptionsButtons
+              onClick={handleAction}
+              actionFunction={sortByYearAscending}
+              movies={movies}
+              setMovies={setMovies}
+              filteredResults={isFilterApplied}
+              setFilteredResults={setIsFilterApplied}
+              buttonText='ASCENDING BY YEAR'
+            />
+
+            <OptionsButtons
+              onClick={handleAction}
+              actionFunction={sortByYearDescending}
+              movies={movies}
+              setMovies={setMovies}
+              filteredResults={isFilterApplied}
+              setFilteredResults={setIsFilterApplied}
+              buttonText='DESCENDING BY YEAR'
+            />
+
+            <OptionsButtons
+              onClick={handleAction}
+              actionFunction={sortByTitle}
+              movies={movies}
+              setMovies={setMovies}
+              filteredResults={isFilterApplied}
+              setFilteredResults={setIsFilterApplied}
+              buttonText='ALPHABET'
+            />
+          </div>
+        </div>
+
+        {movies.length === 0
+          ? (
+            <h1 className="container-title-no-movies">No movies</h1>
+          ) : (
+            <section className="main-movies">
+              {isFilterApplied
+                ? (
+                  <LoadingMovies />
+                ) : (
+                  <>
+                    {movies.map((movie, id) => (
+                      <Movie
+                        key={id}
+                        movie={movie}
+                        onDelete={() => deleteMovie(movie.id, setMovies)}
+                        setSelectedMovie={setSelectedMovie}
+                      />
+                    ))}
+                    {selectedMovie && (
+                      <Modal
+                        movie={selectedMovie}
+                        onClose={closeEditModal}
+                        onEdit={handleEdit}
+                      />
+                    )}
+                  </>
+                )
+
+              }
+            </section>
+          )
+        }
       </main>
     </div>
   );

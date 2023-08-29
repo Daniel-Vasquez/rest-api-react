@@ -1,0 +1,31 @@
+.optionsButtons {
+  outline: 0;
+  grid-gap: 8px;
+  align-items: center;
+  background: 0 0;
+  border: 1px solid #000;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow: hidden;
+  padding: 2px 7px;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  transition: all .14s ease-out;
+  white-space: nowrap;
+}
+
+.optionsButtons:hover {
+  box-shadow: 4px 4px 0 #000;
+  transform: translate(-4px, -4px);
+}
+
+.optionsButtons:focus-visible {
+  outline-offset: 1px;
+}
+
+.optionsButtons:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
