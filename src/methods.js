@@ -12,15 +12,18 @@ export const handleDeleteMovie = async (id, setMovies) => {
 };
 
 // Create movie
-export async function createMovie(title, poster, year, director, duration, rate, genre) {
+export async function createMovie(movieData, poster) {
+  console.log({ movieData })
+  const { title, year, director, duration, rate, genre } = movieData;
+  
   const data = {
     title: title,
-    poster: poster,
-    year: year,
     director: director,
+    year: year,
+    poster: poster,
     duration: duration,
     rate: rate,
-    genre: genre,
+    genre: genre.split(','),
   };
 
   await fetch(`https://rest-api-ytw2-dev.fl0.io/movies`, {

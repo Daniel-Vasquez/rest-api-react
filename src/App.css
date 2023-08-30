@@ -146,7 +146,7 @@
 }
 
 @media screen and (max-width: 900px) {
-  .container-form.container-form__form {
+  .container-form__form.form-outspread {
     max-height: 1500px;
   }
 

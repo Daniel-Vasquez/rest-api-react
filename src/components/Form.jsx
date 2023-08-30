@@ -1,23 +1,12 @@
 import styleForm from './styles/Form.module.css'
 
 export const Form = ({
-  title,
-  setTitle,
-  year,
-  setYear,
-  director,
-  setDirector,
-  duration,
-  setDuration,
-  rate,
-  setRate,
-  genre,
-  setGenre,
-  handleSubmit
+  movie,
+  setMovieData,
+  handleSubmit,
 }) => {
-  const handleChangeForm = (value, useState) => {
-    useState(value)
-  }
+  const { id, title, director, year, duration, rate, genre } = movie;
+
   return (
     <form className={styleForm.form} onSubmit={handleSubmit}>
       <div name='title'>
@@ -28,7 +17,7 @@ export const Form = ({
           className={styleForm["form-input"]}
           type="text"
           value={title}
-          onChange={(e) => handleChangeForm(e.target.value, setTitle)}
+          onChange={(e) => setMovieData({ ...movie, title: e.target.value })}
           required
         />
       </div>
@@ -41,7 +30,7 @@ export const Form = ({
           className={styleForm["form-input"]}
           type="text"
           value={director}
-          onChange={(e) => handleChangeForm(e.target.value, setDirector)}
+          onChange={(e) => setMovieData({ ...movie, director: e.target.value })}
           required
         />
       </div>
@@ -56,7 +45,7 @@ export const Form = ({
           value={year ? year : ""}
           min={1900}
           max={2024}
-          onChange={(e) => handleChangeForm(parseInt(e.target.value), setYear)}
+          onChange={(e) => setMovieData({ ...movie, year: parseInt(e.target.value) })}
           required
         />
       </div>
@@ -70,7 +59,7 @@ export const Form = ({
           type="number"
           value={duration ? duration : ""}
           min={0}
-          onChange={(e) => handleChangeForm(parseInt(e.target.value), setDuration)}
+          onChange={(e) => setMovieData({ ...movie, duration: parseInt(e.target.value) })}
           required
         />
         <span className={styleForm["form-label__span"]}>
@@ -88,7 +77,7 @@ export const Form = ({
           value={rate ? rate : ""}
           min={0}
           max={10}
-          onChange={(e) => handleChangeForm(parseInt(e.target.value), setRate)}
+          onChange={(e) => setMovieData({ ...movie, rate: parseInt(e.target.value) })}
         />
       </div>
 
@@ -99,7 +88,7 @@ export const Form = ({
         <select
           className={styleForm["form-select"]}
           defaultValue={Array.isArray(genre) ? genre[0] : genre}
-          onChange={(e) => handleChangeForm(e.target.value, setGenre)}
+          onChange={(e) => setMovieData({ ...movie, genre: e.target.value })}
         >
           <option value="Action">Action</option>
           <option value="Adventure">Adventure</option>

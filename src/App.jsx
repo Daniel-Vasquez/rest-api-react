@@ -12,12 +12,16 @@ import './App.css';
 
 const App = () => {
   const [movies, setMovies] = useState([]);
-  const [title, setTitle] = useState('');
-  const [year, setYear] = useState('');
-  const [director, setDirector] = useState('');
-  const [duration, setDuration] = useState('');
-  const [rate, setRate] = useState('');
-  const [genre, setGenre] = useState('Action');
+
+  const [movieData, setMovieData] = useState({
+    title: '',
+    year: '',
+    director: '',
+    duration: '',
+    rate: '',
+    genre: 'Action'
+  });
+
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -43,15 +47,17 @@ const App = () => {
     e.preventDefault();
 
     setIsLoaded(true);
-    await createMovie(title, newPoster, year, director, duration, rate, genre.split(','));
+    await createMovie(movieData, newPoster);
     setIsLoaded(false);
 
-    setTitle('');
-    setYear('');
-    setDirector('');
-    setDuration('');
-    setRate('');
-    setGenre('');
+    setMovieData({
+      title: '',
+      year: '',
+      director: '',
+      duration: '',
+      rate: '',
+      genre: 'Action'
+    });
 
     allMovies()
   }
@@ -103,30 +109,20 @@ const App = () => {
           }
         >
           <Form
-            title={title}
-            setTitle={setTitle}
-            year={year}
-            setYear={setYear}
-            director={director}
-            setDirector={setDirector}
-            duration={duration}
-            setDuration={setDuration}
-            rate={rate}
-            setRate={setRate}
-            genre={genre}
-            setGenre={setGenre}
+            movie={movieData}
+            setMovieData={setMovieData}
             handleSubmit={handleSubmit}
           />
           <div className='container-form-show-card'>
             <Movie
               movie={{
-                title: title ? title : '',
-                year: year ? year : "",
+                title: movieData.title || '',
+                director: movieData.director || '',
+                year: movieData.year || "",
                 poster: newPoster,
-                director: director ? director : '',
-                duration: duration ? duration : 0,
-                rate: rate ? rate : 0,
-                genre: genre ? genre : 'Action'
+                duration: movieData.duration || 0,
+                rate: movieData.rate || 0,
+                genre: movieData.genre || 'Action'
               }}
             />
           </div>
