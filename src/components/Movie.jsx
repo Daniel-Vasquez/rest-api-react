@@ -51,7 +51,7 @@ const Movie = ({ movie, onDelete, setSelectedMovie }) => {
         <Modal 
           movie={{ title }}
           onClose={() => setOpenDeleteModal(false)}
-          onEdit={() => onDelete(id)}
+          onClick={() => onDelete(id)}
         />
       }
     </>

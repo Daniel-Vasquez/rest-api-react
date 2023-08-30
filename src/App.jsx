@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Form } from './components/Form';
+import { Form } from './components/Form/';
 import { setRandomImage } from './utils';
 import { handleDeleteMovie, createMovie, updateMovie } from './methods';
 import { Loading } from './components/Loading';
@@ -75,6 +75,7 @@ const App = () => {
   }
 
   const handleEdit = async (updatedMovie) => {
+    console.log({updatedMovie})
     setIsLoaded(true);
     await updateMovie(updatedMovie.id, updatedMovie, setMovies)
     setIsLoaded(false);
@@ -116,7 +117,7 @@ const App = () => {
           <div className='container-form-show-card'>
             <Movie
               movie={{
-                title: movieData.title || '',
+                title: movieData.title || 'Movie title',
                 director: movieData.director || '',
                 year: movieData.year || "",
                 poster: newPoster,
@@ -190,12 +191,11 @@ const App = () => {
                       <Modal
                         movie={selectedMovie}
                         onClose={closeEditModal}
-                        onEdit={handleEdit}
+                        onClick={handleEdit}
                       />
                     )}
                   </>
                 )
-
               }
             </section>
           )

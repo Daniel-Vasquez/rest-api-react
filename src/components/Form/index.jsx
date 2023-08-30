@@ -1,4 +1,4 @@
-import styleForm from './styles/Form.module.css'
+import styleForm from "./index.module.css";
 
 export const Form = ({
   movie,
@@ -9,7 +9,7 @@ export const Form = ({
 
   return (
     <form className={styleForm.form} onSubmit={handleSubmit}>
-      <div name='title'>
+      <div className={styleForm["form-inputs"]} name='title'>
         <label className={styleForm["form-label"]}>
           Title:
         </label>
@@ -22,7 +22,7 @@ export const Form = ({
         />
       </div>
 
-      <div name='director'>
+      <div className={styleForm["form-inputs"]} name='director'>
         <label className={styleForm["form-label"]}>
           Director:
         </label>
@@ -35,7 +35,7 @@ export const Form = ({
         />
       </div>
 
-      <div name='year'>
+      <div className={styleForm["form-inputs"]} name='year'>
         <label className={styleForm["form-label"]}>
           Year:
         </label>
@@ -50,7 +50,7 @@ export const Form = ({
         />
       </div>
 
-      <div name='duration'>
+      <div className={styleForm["form-inputs"]} name='duration'>
         <label className={styleForm["form-label"]}>
           Duration:
         </label>
@@ -62,12 +62,12 @@ export const Form = ({
           onChange={(e) => setMovieData({ ...movie, duration: parseInt(e.target.value) })}
           required
         />
-        <span className={styleForm["form-label__span"]}>
+        {/* <span className={styleForm["form-label__span"]}>
           *In minutes, example: <strong>90, 120, 180,</strong> etc.
-        </span>
+        </span> */}
       </div>
 
-      <div name='rate'>
+      <div className={styleForm["form-inputs"]} name='rate'>
         <label className={styleForm["form-label"]}>
           Rate:
         </label>
@@ -81,7 +81,7 @@ export const Form = ({
         />
       </div>
 
-      <div name='genre'>
+      <div className={styleForm["form-inputs"]} name='genre'>
         <label className={styleForm["form-label"]}>
           Genre:
         </label>
@@ -111,7 +111,7 @@ export const Form = ({
         className={styleForm["form-button"]}
         type='submit'
       >
-        Create
+        {id ? 'SAVE' : 'CREATE'}
       </button>
     </form>
   )

@@ -54,13 +54,25 @@ export async function createMovie(movieData, poster) {
 
 // Update movie
 export async function updateMovie(id, updatedData, setMovies) {
+  const { title, year, director, poster, duration, rate, genre } = updatedData;
+
+  const data = {
+    title: title,
+    director: director,
+    year: year,
+    poster: poster,
+    duration: duration,
+    rate: rate,
+    genre: typeof genre === 'string' ? genre.split(',') : genre,
+  };
+
   try {
     const response = await fetch(`https://rest-api-ytw2-dev.fl0.io/movies/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(updatedData),
+      body: JSON.stringify(data),
     });
 
     if (!response.ok) {
