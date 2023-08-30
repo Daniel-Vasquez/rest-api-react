@@ -8,11 +8,12 @@ import { sortByYearDescending, sortByYearAscending, sortByTitle } from './utils'
 import { LoadingMovies } from './components/LoadingMovies';
 import { OptionsButtons } from './components/OptionsButtons';
 import Movie from './components/Movie';
+import styleMain from './components/styles/main.module.css';
+import styleContainer from './components/styles/container.module.css';
 import './App.css';
 
 const App = () => {
   const [movies, setMovies] = useState([]);
-
   const [movieData, setMovieData] = useState({
     title: '',
     year: '',
@@ -92,21 +93,21 @@ const App = () => {
   }
 
   return (
-    <div className="container">
-      <div className='container-button'>
+    <div className="App">
+      <div className={styleContainer["container-button"]}>
         <button
           className={
-            `container-button__button ${showForm ? 'button-color' : ''}`
+            `${styleContainer["container-button__button"]} ${showForm ? styleContainer["button-color"] : ''}`
           }
           onClick={() => setShowForm(!showForm)}
         >
           {!showForm ? 'Create a movie' : 'Close form'}
         </button>
       </div>
-      <div className='container-form'>
+      <div className={styleContainer["container-form"]}>
         <div
           className={
-            `container-form__form ${showForm ? 'form-outspread' : ''}`
+            `${styleContainer["container-form__form"]} ${showForm ? styleContainer["form-outspread"] : ''}`
           }
         >
           <FormMovie
@@ -114,7 +115,7 @@ const App = () => {
             setMovieData={setMovieData}
             handleSubmit={handleSubmit}
           />
-          <div className='container-form-show-card'>
+          <div className={styleContainer["container-form-show-card"]}>
             <Movie
               movie={{
                 title: movieData.title || 'Movie title',
@@ -130,13 +131,13 @@ const App = () => {
         </div>
       </div>
 
-      <h1 className="container-title">Movie catalog</h1>
+      <h1 className={styleContainer["container-title"]}>Movie catalog</h1>
       <main className="main">
-        <div className="main-opntions">
-          <div className="main-opntions-text">
-            <h3 className="main-opntions-text__text">SORT BY:</h3>
+        <div className={styleMain["main-opntions"]}>
+          <div className={styleMain["main-opntions-text"]}>
+            <h3 className={styleMain["main-opntions-text__text"]}>SORT BY:</h3>
           </div>
-          <div className="options-buttons">
+          <div className={styleMain["main-options-buttons"]}>
             <OptionsButtons
               handleClick={handleAction}
               actionFunction={sortByYearAscending}
@@ -169,30 +170,30 @@ const App = () => {
           </div>
         </div>
 
-        {movies.length === 0 && <h1 className="container-title-no-movies">No movies</h1>}
+        {movies.length === 0 && <h1 className={styleContainer["container-title-no-movies"]}>No movies</h1>}
 
-        <section className="main-movies">
+        <section className={styleMain["main-movies"]}>
           {isFilterApplied && <LoadingMovies />}
 
           {!isFilterApplied && (
-              <>
-                {movies.map((movie, id) => (
-                  <Movie
-                    key={id}
-                    movie={movie}
-                    onDelete={() => deleteMovie(movie.id, setMovies)}
-                    setSelectedMovie={setSelectedMovie}
-                  />
-                ))}
-                {selectedMovie && (
-                  <Modal
-                    movie={selectedMovie}
-                    onClose={closeEditModal}
-                    onClick={handleEdit}
-                  />
-                )}
-              </>
-            )
+            <>
+              {movies.map((movie, id) => (
+                <Movie
+                  key={id}
+                  movie={movie}
+                  onDelete={() => deleteMovie(movie.id, setMovies)}
+                  setSelectedMovie={setSelectedMovie}
+                />
+              ))}
+              {selectedMovie && (
+                <Modal
+                  movie={selectedMovie}
+                  onClose={closeEditModal}
+                  onClick={handleEdit}
+                />
+              )}
+            </>
+          )
           }
         </section>
       </main>

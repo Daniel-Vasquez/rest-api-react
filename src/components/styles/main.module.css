@@ -1,0 +1,33 @@
+.main-opntions {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 80px 1fr;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.main-opntions-text {
+  display: flex;
+}
+
+.main-opntions-text__text {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.main-options-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.main-movies {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,
+      minmax(250px,
+        1fr));
+  gap: 20px;
+  justify-content: center;
+  width: 100%;
+}
