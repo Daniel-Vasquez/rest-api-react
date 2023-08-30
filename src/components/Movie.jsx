@@ -49,7 +49,7 @@ const Movie = ({ movie, onDelete, setSelectedMovie }) => {
       </article>
       {openDeleteModal &&
         <Modal 
-          movie={{ title }}
+          movie={{title, poster}}
           onClose={() => setOpenDeleteModal(false)}
           onClick={() => onDelete(id)}
         />

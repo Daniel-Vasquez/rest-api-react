@@ -1,6 +1,6 @@
 import styleForm from "./index.module.css";
 
-export const Form = ({
+export const FormMovie = ({
   movie,
   setMovieData,
   handleSubmit,
@@ -62,9 +62,6 @@ export const Form = ({
           onChange={(e) => setMovieData({ ...movie, duration: parseInt(e.target.value) })}
           required
         />
-        {/* <span className={styleForm["form-label__span"]}>
-          *In minutes, example: <strong>90, 120, 180,</strong> etc.
-        </span> */}
       </div>
 
       <div className={styleForm["form-inputs"]} name='rate'>

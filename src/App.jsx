@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Form } from './components/Form/';
+import { FormMovie } from './components/FormMovie';
 import { setRandomImage } from './utils';
 import { handleDeleteMovie, createMovie, updateMovie } from './methods';
 import { Loading } from './components/Loading';
@@ -59,6 +59,7 @@ const App = () => {
       genre: 'Action'
     });
 
+    setShowForm(false)
     allMovies()
   }
 
@@ -75,7 +76,6 @@ const App = () => {
   }
 
   const handleEdit = async (updatedMovie) => {
-    console.log({updatedMovie})
     setIsLoaded(true);
     await updateMovie(updatedMovie.id, updatedMovie, setMovies)
     setIsLoaded(false);
@@ -109,7 +109,7 @@ const App = () => {
             `container-form__form ${showForm ? 'form-outspread' : ''}`
           }
         >
-          <Form
+          <FormMovie
             movie={movieData}
             setMovieData={setMovieData}
             handleSubmit={handleSubmit}
@@ -138,68 +138,63 @@ const App = () => {
           </div>
           <div className="options-buttons">
             <OptionsButtons
-              onClick={handleAction}
+              handleClick={handleAction}
               actionFunction={sortByYearAscending}
               movies={movies}
               setMovies={setMovies}
-              filteredResults={isFilterApplied}
+              disabled={isFilterApplied}
               setFilteredResults={setIsFilterApplied}
               buttonText='ASCENDING BY YEAR'
             />
 
             <OptionsButtons
-              onClick={handleAction}
+              handleClick={handleAction}
               actionFunction={sortByYearDescending}
               movies={movies}
               setMovies={setMovies}
-              filteredResults={isFilterApplied}
+              disabled={isFilterApplied}
               setFilteredResults={setIsFilterApplied}
               buttonText='DESCENDING BY YEAR'
             />
 
             <OptionsButtons
-              onClick={handleAction}
+              handleClick={handleAction}
               actionFunction={sortByTitle}
               movies={movies}
               setMovies={setMovies}
-              filteredResults={isFilterApplied}
+              disabled={isFilterApplied}
               setFilteredResults={setIsFilterApplied}
               buttonText='ALPHABET'
             />
           </div>
         </div>
 
-        {movies.length === 0
-          ? (
-            <h1 className="container-title-no-movies">No movies</h1>
-          ) : (
-            <section className="main-movies">
-              {isFilterApplied
-                ? (
-                  <LoadingMovies />
-                ) : (
-                  <>
-                    {movies.map((movie, id) => (
-                      <Movie
-                        key={id}
-                        movie={movie}
-                        onDelete={() => deleteMovie(movie.id, setMovies)}
-                        setSelectedMovie={setSelectedMovie}
-                      />
-                    ))}
-                    {selectedMovie && (
-                      <Modal
-                        movie={selectedMovie}
-                        onClose={closeEditModal}
-                        onClick={handleEdit}
-                      />
-                    )}
-                  </>
-                )
-              }
-            </section>
-          )
-        }
+        {movies.length === 0 && <h1 className="container-title-no-movies">No movies</h1>}
+
+        <section className="main-movies">
+          {isFilterApplied && <LoadingMovies />}
+
+          {!isFilterApplied && (
+              <>
+                {movies.map((movie, id) => (
+                  <Movie
+                    key={id}
+                    movie={movie}
+                    onDelete={() => deleteMovie(movie.id, setMovies)}
+                    setSelectedMovie={setSelectedMovie}
+                  />
+                ))}
+                {selectedMovie && (
+                  <Modal
+                    movie={selectedMovie}
+                    onClose={closeEditModal}
+                    onClick={handleEdit}
+                  />
+                )}
+              </>
+            )
+          }
+        </section>
       </main>
     </div>
   );

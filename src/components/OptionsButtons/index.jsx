@@ -1,18 +1,18 @@
 import styleOptionsButton from './index.module.css'
 
 export const OptionsButtons = ({
-  onClick,
+  handleClick,
   actionFunction,
   movies,
   setMovies,
-  filteredResults,
+  disabled,
   setFilteredResults,
   buttonText
 }) => {
   const { optionsButtons } = styleOptionsButton
 
   const handleButtonClick = () => {
-    onClick(actionFunction, movies, setMovies, setFilteredResults);
+    handleClick(actionFunction, movies, setMovies, setFilteredResults);
   };
 
 
@@ -20,7 +20,7 @@ export const OptionsButtons = ({
     <button
       className={optionsButtons}
       onClick={handleButtonClick}
-      disabled={filteredResults}
+      disabled={disabled}
     >
       {buttonText}
     </button>

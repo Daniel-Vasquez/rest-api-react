@@ -1,7 +1,6 @@
 import styleModalDelete from './index.module.css'
-import shredderIcon from '../../assets/shredder.png'
 
-export const ModalDelete = ({ title, onDelete, onClosed }) => {
+export const ModalDelete = ({ title, poster, onDelete, onClosed }) => {
   return (
     <div className={styleModalDelete['overlay-delete']}>
       <div className={styleModalDelete['modal-delete']}>
@@ -10,18 +9,18 @@ export const ModalDelete = ({ title, onDelete, onClosed }) => {
         </p>
         <img
           className={styleModalDelete['modal-delete__img']}
-          src={shredderIcon}
+          src={poster}
           alt="shredder"
         />
         <div className={styleModalDelete['modal-delete-options']}>
           <button
-            className={styleModalDelete['modal-delete-options__buttons']}
+            className={styleModalDelete['modal-delete-options__button']}
             onClick={onDelete}
           >
             YES
           </button>
           <button
-            className={styleModalDelete['modal-delete-options__buttons']}
+            className={styleModalDelete['modal-delete-options__button']}
             onClick={onClosed}
           >
             NO

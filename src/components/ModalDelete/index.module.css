@@ -36,7 +36,7 @@
 
 .modal-delete__img {
   display: block;
-  max-width: 150px;
+  height: 270px;
   margin: 0 auto;
 }
 
@@ -47,50 +47,66 @@
   margin-top: 25px;
 }
 
-/* CSS */
-.modal-delete-options__buttons{
-  align-items: center;
-  background-color: #FFFFFF;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: .25rem;
-  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
-  box-sizing: border-box;
-  color: rgba(0, 0, 0, 0.85);
-  cursor: pointer;
-  display: inline-flex;
-  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-  justify-content: center;
-  line-height: 1.25;
-  margin: 0;
-  min-height: 3rem;
-  padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+.modal-delete-options__button {
+  color: #fff;
+  border: none;
   position: relative;
-  text-decoration: none;
-  transition: all 250ms;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: baseline;
-  width: auto;
+  font-size: 1.2em;
+  font-weight: 600;
+  padding: 10px 25px;
+  cursor: pointer;
+  transition: 800ms ease all;
+  outline: none;
 }
 
-.modal-delete-options__buttons:hover,
-.modal-delete-options__buttons:focus {
-  border-color: rgba(0, 0, 0, 0.15);
-  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
-  color: rgba(0, 0, 0, 0.65);
+.modal-delete-options__button:before,
+.modal-delete-options__button:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 2px;
+  width: 0;
+  transition: 400ms ease all;
 }
 
-.modal-delete-options__buttons:hover {
-  transform: translateY(-1px);
+.modal-delete-options__button:after {
+  right: inherit;
+  top: inherit;
+  left: 0;
+  bottom: 0;
 }
 
-.modal-delete-options__buttons:active {
-  background-color: #F0F0F1;
-  border-color: rgba(0, 0, 0, 0.15);
-  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
-  color: rgba(0, 0, 0, 0.65);
-  transform: translateY(0);
+.modal-delete-options__button:hover:before,
+.modal-delete-options__button:hover:after {
+  width: 100%;
+  transition: 800ms ease all;
+}
+
+.modal-delete-options__button:first-child {
+  background-color: red;
+}
+
+.modal-delete-options__button:first-child:hover {
+  background-color: white;
+  color: red;
+}
+
+.modal-delete-options__button:first-child::before,
+.modal-delete-options__button:first-child::after {
+  background-color: red;
+}
+
+.modal-delete-options__button:last-child {
+  background-color: var(--seconds-color);
+}
+
+.modal-delete-options__button:last-child:hover {
+  background-color: white;
+  color: var(--seconds-color);
+}
+
+.modal-delete-options__button:last-child::before,
+.modal-delete-options__button:last-child::after {
+  background-color: var(--seconds-color);
 }

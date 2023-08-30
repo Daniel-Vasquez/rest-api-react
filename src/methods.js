@@ -13,7 +13,6 @@ export const handleDeleteMovie = async (id, setMovies) => {
 
 // Create movie
 export async function createMovie(movieData, poster) {
-  console.log({ movieData })
   const { title, year, director, duration, rate, genre } = movieData;
   
   const data = {
