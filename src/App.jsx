@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import classNames from "classnames";
 import { FormMovie } from './components/FormMovie';
 import { setRandomImage } from './utils';
 import { handleDeleteMovie, createMovie, updateMovie } from './methods';
@@ -84,10 +85,6 @@ const App = () => {
     closeEditModal();
   };
 
-  const handleAction = (actionFunction, currentMovies, updateMovies, updateFilteredMovies) => {
-    actionFunction(currentMovies, updateMovies, updateFilteredMovies);
-  };
-
   if (isLoaded) {
     return <Loading />
   }
@@ -96,19 +93,19 @@ const App = () => {
     <div className="App">
       <div className={styleContainer["container-button"]}>
         <button
-          className={
-            `${styleContainer["container-button__button"]} ${showForm ? styleContainer["button-color"] : ''}`
-          }
+          className={classNames(styleContainer["container-button__button"], {
+            [styleContainer["button-color"]]: showForm,
+          })}
           onClick={() => setShowForm(!showForm)}
         >
-          {!showForm ? 'Create a movie' : 'Close form'}
+          {!showForm ? 'CREATE A MOVIE' : 'CLOSE FORM'}
         </button>
       </div>
       <div className={styleContainer["container-form"]}>
         <div
-          className={
-            `${styleContainer["container-form__form"]} ${showForm ? styleContainer["form-outspread"] : ''}`
-          }
+          className={classNames(styleContainer["container-form__form"], {
+            [styleContainer["form-outspread"]]: showForm,
+          })}
         >
           <FormMovie
             movie={movieData}
@@ -132,6 +129,7 @@ const App = () => {
       </div>
 
       <h1 className={styleContainer["container-title"]}>Movie catalog</h1>
+
       <main className="main">
         <div className={styleMain["main-opntions"]}>
           <div className={styleMain["main-opntions-text"]}>
@@ -139,34 +137,34 @@ const App = () => {
           </div>
           <div className={styleMain["main-options-buttons"]}>
             <OptionsButtons
-              handleClick={handleAction}
-              actionFunction={sortByYearAscending}
+              action={sortByYearAscending}
               movies={movies}
               setMovies={setMovies}
               disabled={isFilterApplied}
-              setFilteredResults={setIsFilterApplied}
-              buttonText='ASCENDING BY YEAR'
-            />
+              setIsLoading={setIsFilterApplied}
+            >
+              ASCENDING BY YEAR
+            </OptionsButtons>
 
             <OptionsButtons
-              handleClick={handleAction}
-              actionFunction={sortByYearDescending}
+              action={sortByYearDescending}
               movies={movies}
               setMovies={setMovies}
               disabled={isFilterApplied}
-              setFilteredResults={setIsFilterApplied}
-              buttonText='DESCENDING BY YEAR'
-            />
+              setIsLoading={setIsFilterApplied}
+            >
+              DESCENDING BY YEAR
+            </OptionsButtons>
 
             <OptionsButtons
-              handleClick={handleAction}
-              actionFunction={sortByTitle}
+              action={sortByTitle}
               movies={movies}
               setMovies={setMovies}
               disabled={isFilterApplied}
-              setFilteredResults={setIsFilterApplied}
-              buttonText='ALPHABET'
-            />
+              setIsLoading={setIsFilterApplied}
+            >
+              ALPHABET
+            </OptionsButtons>
           </div>
         </div>
 

@@ -1,28 +1,24 @@
 import styleOptionsButton from './index.module.css'
 
 export const OptionsButtons = ({
-  handleClick,
-  actionFunction,
+  action,
   movies,
   setMovies,
   disabled,
-  setFilteredResults,
-  buttonText
+  setIsLoading,
+  children
 }) => {
-  const { optionsButtons } = styleOptionsButton
-
   const handleButtonClick = () => {
-    handleClick(actionFunction, movies, setMovies, setFilteredResults);
+    action(movies, setMovies, setIsLoading);
   };
-
 
   return (
     <button
-      className={optionsButtons}
+      className={styleOptionsButton["options-buttons"]}
       onClick={handleButtonClick}
       disabled={disabled}
     >
-      {buttonText}
+      {children}
     </button>
-  )
-}
+  );
+};
