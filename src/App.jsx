@@ -2,16 +2,17 @@ import { useState, useEffect } from 'react';
 import classNames from "classnames";
 import { FormMovie } from './components/FormMovie';
 import { setRandomImage } from './utils';
-import { handleDeleteMovie, createMovie, updateMovie } from './methods';
+import { deleteMovie, createMovie, updateMovie } from './methods';
 import { Loading } from './components/Loading';
 import { Modal } from './components/Modal';
-import { sortByYearDescending, sortByYearAscending, sortByTitle } from './utils';
+import { sortByYearDescending, sortByYearAscending, sortByTitle, getEnvValue } from './utils';
 import { LoadingMovies } from './components/LoadingMovies';
 import { OptionsButtons } from './components/OptionsButtons';
 import Movie from './components/Movie';
 import styleMain from './components/styles/main.module.css';
 import styleContainer from './components/styles/container.module.css';
 import './App.css';
+const ENDPOINT = getEnvValue('ENDPOINT') || 'https://rest-api-ytw2-dev.fl0.io';
 
 const App = () => {
   const [movies, setMovies] = useState([]);
@@ -33,7 +34,7 @@ const App = () => {
   const allMovies = async () => {
     setIsLoaded(true)
 
-    await fetch('https://rest-api-ytw2-dev.fl0.io/movies')
+    await fetch(`${ENDPOINT}/movies`)
       .then((res) => res.json())
       .then((moviesData) => setMovies(moviesData))
       .catch(error => console.error('Error al cargar las películas:', error));
@@ -69,9 +70,9 @@ const App = () => {
     setSelectedMovie(null);
   };
 
-  const deleteMovie = async (id, setMovies) => {
+  const handleDeleteMovie = async (id, setMovies) => {
     setIsLoaded(true);
-    await handleDeleteMovie(id, setMovies)
+    await deleteMovie(id, setMovies)
     setIsLoaded(false);
 
     allMovies()
@@ -117,7 +118,7 @@ const App = () => {
               movie={{
                 title: movieData.title || 'Movie title',
                 director: movieData.director || '',
-                year: movieData.year || "",
+                year: movieData.year || 'Year',
                 poster: newPoster,
                 duration: movieData.duration || 0,
                 rate: movieData.rate || 0,
@@ -179,7 +180,7 @@ const App = () => {
                 <Movie
                   key={id}
                   movie={movie}
-                  onDelete={() => deleteMovie(movie.id, setMovies)}
+                  onDelete={() => handleDeleteMovie(movie.id, setMovies)}
                   setSelectedMovie={setSelectedMovie}
                 />
               ))}

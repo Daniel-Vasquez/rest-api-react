@@ -1,7 +1,10 @@
+import { getEnvValue } from "./utils";
+const ENDPOINT = getEnvValue('ENDPOINT') || 'https://rest-api-ytw2-dev.fl0.io';
+
 // Delete movie
-export const handleDeleteMovie = async (id, setMovies) => {
+export const deleteMovie = async (id, setMovies) => {
   try {
-    await fetch(`https://rest-api-ytw2-dev.fl0.io/movies/${id}`, {
+    await fetch(`${ENDPOINT}/movies/${id}`, {
       method: 'DELETE'
     });
 
@@ -25,7 +28,7 @@ export async function createMovie(movieData, poster) {
     genre: genre.split(','),
   };
 
-  await fetch(`https://rest-api-ytw2-dev.fl0.io/movies`, {
+  await fetch(`${ENDPOINT}/movies`, {
     method: "POST",
     mode: "cors",
     cache: "no-cache",
@@ -66,7 +69,7 @@ export async function updateMovie(id, updatedData, setMovies) {
   };
 
   try {
-    const response = await fetch(`https://rest-api-ytw2-dev.fl0.io/movies/${id}`, {
+    const response = await fetch(`${ENDPOINT}/movies/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
