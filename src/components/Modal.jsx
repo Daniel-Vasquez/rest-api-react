@@ -1,79 +1,51 @@
 import { useState } from 'react';
+import { FormMovie } from './FormMovie';
+import { ModalDelete } from './ModalDelete/index.jsx';
 import styleModule from './styles/Modal.module.css';
 
-export const EditModal = ({ movie, onClose, onEdit }) => {
+export const Modal = ({ movie, onClose, onClick }) => {
   const [updatedMovie, setUpdatedMovie] = useState({ ...movie });
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    if (name === 'year' || name === 'duration' || name === 'rate') {
-      setUpdatedMovie((prevMovie) => ({
-        ...prevMovie,
-        [name]: parseInt(value),
-      }));
-      return;
-    }
+  const { id: movieExists, title, poster } = updatedMovie;
 
-    setUpdatedMovie((prevMovie) => ({
-      ...prevMovie,
-      [name]: value,
-    }));
-  };
-
-  const handleEdit = () => {
-    onEdit(updatedMovie);
+  const handleEdit = (e) => {
+    e.preventDefault();
+    onClick(updatedMovie);
   };
 
   return (
     <div className={styleModule.overlay}>
       <div className={styleModule.modal}>
-        <button className={styleModule['modal-close']} onClick={onClose}>
-          ❌
-        </button>
-        <h2 className={styleModule['modal-title']}>Editar Película</h2>
-        <form>
-          <input
-            className={styleModule['modal-input']}
-            type="text"
-            name="title"
-            value={updatedMovie.title}
-            onChange={handleInputChange}
-          />
-          <input
-            className={styleModule['modal-input']}
-            type="text"
-            name="director"
-            value={updatedMovie.director}
-            onChange={handleInputChange}
-          />
-          <input
-            className={styleModule['modal-input']}
-            type="number"
-            name="year"
-            value={updatedMovie.year}
-            onChange={handleInputChange}
-          />
-          <input
-            className={styleModule['modal-input']}
-            type="number"
-            name="duration"
-            value={updatedMovie.duration}
-            onChange={handleInputChange}
-          />
-          <input
-            className={styleModule['modal-input']}
-            type="number"
-            name="rate"
-            value={updatedMovie.rate}
-            onChange={handleInputChange}
-          />
+        {movieExists && (
+          <>
+            <button className={styleModule['modal-close']} onClick={onClose}>
+              <div className={styleModule['modal-right-arrow']}></div>
+              <div className={styleModule['modal-left-arrow']}></div>
+              <label className={styleModule['modal-close-btn']}>close</label>
+            </button>
 
-        </form>
-        <div className={styleModule['modal-buttons-options']}>
-          <button className={styleModule['modal-button']} onClick={handleEdit}>Guardar Cambios</button>
-          <button className={styleModule['modal-button']} onClick={onClose}>Cancelar</button>
-        </div>
+            <h2 className={styleModule['modal-title']}>
+              Edit movie
+            </h2>
+
+            <FormMovie
+              movie={updatedMovie}
+              setMovieData={setUpdatedMovie}
+              handleSubmit={handleEdit}
+            />
+          </>
+        )}
+
+        {!movieExists && (
+          <ModalDelete
+            title={title}
+            poster={poster}
+            onClosed={onClose}
+            onDelete={onClick}
+          />
+        )}
       </div>
     </div>
+
   );
 };

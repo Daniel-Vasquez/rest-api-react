@@ -1,11 +1,10 @@
-.card {
+.movie {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 10px;
   width: 100%;
-  min-height: 200px;
   height: 100%;
   border-top-right-radius: 10px;
   overflow: hidden;
@@ -18,25 +17,24 @@
   background-color: white;
 }
 
-.card:hover {
+.movie:hover {
   /* transform: translateY(-5px) scale(1.005) translateZ(0); */
-  box-shadow: 0 24px 36px rgba(0, 0, 0, 0.11),
-    0 24px 46px var(--box-shadow-color);
+  box-shadow: 1px 1px 26px 5px var(--primary-color);
 }
 
-.card:hover .overlay {
+.movie:hover .overlay {
   transform: scale(10) translateZ(0);
 }
 
-.card:hover .circle {
+.movie:hover .movie-circle {
   border-color: var(--bg-color-light);
 }
 
-.card:hover .circle:after {
+.movie:hover .movie-circle:after {
   background: var(--bg-color-light);
 }
 
-.card .card-info {
+.movie .movie-info {
   z-index: 100;
 }
 
@@ -44,12 +42,12 @@
   width: 100%;
   height: 100%;
   display: block;
-  margin: .5em auto;
+  margin: 0.5rem auto;
   overflow: hidden;
   position: relative;
 }
 
-.circle {
+.movie-circle {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,13 +59,11 @@
   transition: all 0.3s ease-out;
 }
 
-.circle-img {
-  min-height: 200px;
+.movie-circle-img {
   width: 100%;
-  max-height: 350px;
+  max-height: 365px;
   height: 100%;
   margin: 0 auto;
-  object-fit: contain;
 }
 
 .play-button {
@@ -117,28 +113,28 @@
   transition: transform 0.5s ease-out;
 }
 
-.card-info {
+.movie-info {
   width: 100%;
 }
 
-.card-info__title {
+.movie-info__title {
   color: var(--seconds-color);
   font-weight: 600;
 }
 
-.card-info__text {
+.movie-info__text {
   line-height: 20px;
   opacity: .8;
   color: var(--primary-color);
 }
 
-.card-info__title,
-.card-info__text {
+.movie-info__title,
+.movie-info__text {
   margin: 0;
   margin-bottom: 4px;
 }
 
-.card-buttons {
+.movie-buttons {
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -179,7 +175,7 @@
 
 .button-48.button-48-color:before {
   background-color: #00bcd4;
-  content: "Editar";
+  content: "Edit";
 }
 
 .button-48:before {
@@ -191,7 +187,7 @@
   backface-visibility: hidden;
   background-color: #e91e63;
   clip-path: polygon(-1% 0, 0 0, -25% 100%, -1% 100%);
-  content: "Eliminar";
+  content: "Delete";
   height: 100%;
   left: 0;
   position: absolute;
@@ -214,4 +210,12 @@
 .button-48:before,
 .button-48:hover:before {
   border-radius: 10px;
+}
+
+@media screen and (max-width: 550px) {
+  .movie {
+    max-width: 300px;
+    width: 100%;
+    margin: 0 auto;
+  }
 }
